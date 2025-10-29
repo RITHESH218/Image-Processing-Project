@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Steganography</title>
+    <title>Hideo</title>
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
@@ -20,7 +20,7 @@
         <!-- Header -->
         <header class="text-center mb-10">
             <div class="flex justify-center items-center mb-4">
-                <h1 class="text-4xl font-bold text-gray-800 dark:text-white mr-4">🔐 Image Steganography</h1>
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-white mr-4">Hideo</h1>
                 <button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5">
                     <i class="fas fa-moon" id="theme-toggle-dark-icon"></i>
                     <i class="fas fa-sun" id="theme-toggle-light-icon" style="display: none;"></i>
@@ -39,7 +39,7 @@
                 
                 <div class="mb-4">
                     <label for="encode-image-upload" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">Upload Image:</label>
-                    <div id="encode-drop-zone" class="file-drop-zone">
+                    <div class="file-drop-zone" id="encode-drop-zone">
                         <div class="file-drop-zone-prompt">
                             <i class="fas fa-upload text-3xl text-gray-400 mb-2"></i>
                             <p>Drag & drop an image or click to select</p>
@@ -50,7 +50,7 @@
                 
                 <div class="mb-4">
                     <label for="secret-message" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">Secret Message:</label>
-                    <textarea id="secret-message" rows="4" placeholder="Enter your secret message here..."
+                    <textarea id="secret-message" rows="4" placeholder="Enter your secret message here..." 
                               class="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
                     <p id="message-capacity" class="text-sm text-gray-500 dark:text-gray-400 mt-1">Message capacity: 0 characters</p>
                 </div>
@@ -65,7 +65,7 @@
                 <div id="encoded-image-container" class="mt-6 hidden">
                     <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Encoded Image:</h3>
                     <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg flex justify-center">
-                        <img id="encoded-image" class="max-w-full max-h-64 object-contain rounded" alt="Encoded image">
+                        <img id="encoded-image" alt="Encoded image" class="max-w-full max-h-64 object-contain rounded">
                     </div>
                     <div class="mt-4 flex justify-center">
                         <a id="download-btn" class="btn btn-success" download="encoded-image.png">
@@ -83,7 +83,7 @@
                 
                 <div class="mb-4">
                     <label for="decode-image-upload" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">Upload Encoded Image:</label>
-                    <div id="decode-drop-zone" class="file-drop-zone">
+                    <div class="file-drop-zone" id="decode-drop-zone">
                         <div class="file-drop-zone-prompt">
                             <i class="fas fa-upload text-3xl text-gray-400 mb-2"></i>
                             <p>Drag & drop an image or click to select</p>
