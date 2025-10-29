@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Steganography</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <div class="flex justify-center items-center mb-4">
+                <h1 class="text-4xl font-bold text-gray-800 dark:text-white mr-4">🔐 Image Steganography</h1>
+                <button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5">
+                    <i class="fas fa-moon" id="theme-toggle-dark-icon"></i>
+                    <i class="fas fa-sun" id="theme-toggle-light-icon" style="display: none;"></i>
+                </button>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400">Hide secret messages in images using LSB steganography.</p>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Encode Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-t-4 border-blue-500">
+                <h2 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-6 flex items-center">
+                    <i class="fas fa-lock mr-3"></i>Encode Message
+                </h2>
+                
+                <div class="mb-4">
+                    <label for="encode-image-upload" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">Upload Image:</label>
+                    <div id="encode-drop-zone" class="file-drop-zone">
+                        <div class="file-drop-zone-prompt">
+                            <i class="fas fa-upload text-3xl text-gray-400 mb-2"></i>
+                            <p>Drag & drop an image or click to select</p>
+                        </div>
+                        <input type="file" id="encode-image-upload" accept="image/png, image/jpeg" class="file-drop-zone-input">
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="secret-message" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">Secret Message:</label>
+                    <textarea id="secret-message" rows="4" placeholder="Enter your secret message here..."
+                              class="w-full p-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"></textarea>
+                    <p id="message-capacity" class="text-sm text-gray-500 dark:text-gray-400 mt-1">Message capacity: 0 characters</p>
+                </div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <button id="encode-btn" class="btn btn-primary">
+                        <i class="fas fa-lock mr-2"></i>Encode
+                    </button>
+                    <div id="encode-loading" class="loading"></div>
+                </div>
+                
+                <div id="encoded-image-container" class="mt-6 hidden">
+                    <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Encoded Image:</h3>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg flex justify-center">
+                        <img id="encoded-image" class="max-w-full max-h-64 object-contain rounded" alt="Encoded image">
+                    </div>
+                    <div class="mt-4 flex justify-center">
+                        <a id="download-btn" class="btn btn-success" download="encoded-image.png">
+                            <i class="fas fa-download mr-2"></i>Download Encoded Image
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Decode Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border-t-4 border-green-500">
+                <h2 class="text-2xl font-semibold text-green-600 dark:text-green-400 mb-6 flex items-center">
+                    <i class="fas fa-unlock mr-3"></i>Decode Message
+                </h2>
+                
+                <div class="mb-4">
+                    <label for="decode-image-upload" class="block text-gray-700 dark:text-gray-300 mb-2 font-medium">Upload Encoded Image:</label>
+                    <div id="decode-drop-zone" class="file-drop-zone">
+                        <div class="file-drop-zone-prompt">
+                            <i class="fas fa-upload text-3xl text-gray-400 mb-2"></i>
+                            <p>Drag & drop an image or click to select</p>
+                        </div>
+                        <input type="file" id="decode-image-upload" accept="image/png, image/jpeg" class="file-drop-zone-input">
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <button id="decode-btn" class="btn btn-success">
+                        <i class="fas fa-unlock mr-2"></i>Decode
+                    </button>
+                    <div id="decode-loading" class="loading"></div>
+                </div>
+                
+                <div id="decoded-message-container" class="mt-6 hidden">
+                    <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">Decoded Message:</h3>
+                    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg relative">
+                        <p id="decoded-message" class="whitespace-pre-wrap break-words"></p>
+                        <button id="copy-btn" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" title="Copy to clipboard">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-600 dark:text-gray-400 text-sm">
+            <p>© 2025 Rithesh Shinde & Rakshith Reddy| CVR College of Engineering – AIM Dept</p>
+        </footer>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <span id="toast-message"></span>
+    </div>
+    
+    <!-- Canvas for image processing (hidden) -->
+    <canvas id="canvas" style="display: none;"></canvas>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
